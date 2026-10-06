@@ -1,0 +1,42 @@
+name: Collect Melting ranking
+
+on:
+  schedule:
+    - cron: '0 9,15 * * *'
+      timezone: 'Asia/Seoul'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: collect-melting-ranking
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.11'
+      - name: Check online database secret
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo 'DATABASE_URL repository secret is missing.' >&2
+            exit 1
+          fi
+      - name: Install collector
+        run: python -m pip install -e .
+      - name: Prepare tables and public source
+        run: |
+          python scripts/init_db.py
+          python scripts/register_melting_profile.py
+      - name: Collect and validate ranking
+        run: |
+          python scripts/collect_melting.py
+          python scripts/validate_latest_snapshot.py
