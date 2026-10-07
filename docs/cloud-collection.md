@@ -9,7 +9,7 @@ The GitHub Actions workflow at `.github/workflows/collect-melting.yml` is schedu
 3. In the repository, open **Settings → Secrets and variables → Actions → New repository secret**. Name it `DATABASE_URL` and paste the online PostgreSQL connection string as its value.
 4. Open **Actions → Collect Melting ranking → Run workflow** once. Confirm that table creation, profile registration, collection, and validation all succeed and that 50 ranks were saved.
 5. Point the desktop app at the same online database if you want cloud-collected rankings in its screen. Plan any migration of existing local history before switching the desktop database URL.
-6. After a successful cloud run, keep the local Codex collection automation paused to avoid duplicate 10:00 snapshots.
+6. The local Codex automation currently updates the desktop app's local database at 10:00. If the desktop app is later pointed at this online database, pause the local automation to avoid duplicate 10:00 snapshots.
 
 GitHub scheduled workflows run from the default branch and may start late or be dropped under load, especially at the top of the hour. Check the Actions run history regularly. The workflow also supports manual runs.
 
