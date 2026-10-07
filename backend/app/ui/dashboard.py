@@ -40,6 +40,7 @@ class StudioDashboard(tk.Tk):
         self._build()
         self.after(50, self._poll_results)
         self.refresh()
+        self.after(60_000, self._auto_refresh)
 
     def _build(self):
         style = ttk.Style(self)
@@ -175,6 +176,11 @@ class StudioDashboard(tk.Tk):
         def operation(session):
             return load_dashboard_data(session)
         self._run_background(operation, lambda data: self._render(data))
+
+    def _auto_refresh(self):
+        if not self._busy:
+            self.refresh()
+        self.after(60_000, self._auto_refresh)
 
     def collect(self):
         def operation(session):
