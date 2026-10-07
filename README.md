@@ -77,9 +77,9 @@ Pass a snapshot ID as an argument to inspect an older snapshot.
 
 ## Daily collection
 
-The Codex app automation **멜팅 랭킹 매일 10시 수집** is paused. The GitHub Actions workflow is scheduled daily at 10:00 Asia/Seoul. The scheduled job does not run Gemini analysis; those calls are available on demand in the results screen.
+The Codex app automation **멜팅 랭킹 매일 10시 수집** is active at 10:00 Asia/Seoul and writes to the local PostgreSQL database shown by the desktop app. The computer, Codex automation runner, Docker Desktop, and PostgreSQL must be available then. The GitHub Actions workflow is also scheduled at 10:00 Asia/Seoul, but writes to the separate online database. Neither scheduled job runs Gemini analysis; those calls are available on demand in the results screen.
 
-The GitHub Actions workflow collects while the computer is off when its online PostgreSQL database and repository secret are configured. See [cloud setup](docs/cloud-collection.md). Keep the local Codex automation paused to avoid duplicate collections.
+The GitHub Actions workflow collects while the computer is off when its online PostgreSQL database and repository secret are configured. See [cloud setup](docs/cloud-collection.md). Cloud collections do not appear in the desktop app until it is configured to read that online database.
 
 ## Gemini specialist agents
 
