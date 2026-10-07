@@ -2,7 +2,7 @@ name: Collect Melting ranking
 
 on:
   schedule:
-    - cron: '0 9,15 * * *'
+    - cron: '0 10 * * *'
       timezone: 'Asia/Seoul'
   workflow_dispatch:
 
